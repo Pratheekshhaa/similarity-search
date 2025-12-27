@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Eyewear AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>Visual Eyewear AI Platform</h1>
+
+    <div class="card-grid">
+        <div class="card">
+            <h2>🔍 Visual Similarity Search</h2>
+            <p>Upload or capture an image to find similar eyewear products.</p>
+            <form action="/search" method="post" enctype="multipart/form-data">
+                <input type="file" name="image" accept="image/*" capture>
+                <br><br>
+                <button type="submit">Search Similar Glasses</button>
+            </form>
+        </div>
+
+        <div class="card">
+            <h2>😎 Which Glasses Suit Me?</h2>
+            <p>Upload your photo and get recommendations that suit your face.</p>
+            <form action="/search" method="post" enctype="multipart/form-data">
+                <input type="file" name="image" accept="image/*" capture>
+                <br><br>
+                <button type="submit">Check Suitability</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

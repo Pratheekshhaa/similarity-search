@@ -1,0 +1,46 @@
+# -----------------------------
+# Python
+# -----------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+.env
+.venv
+venv/
+
+# -----------------------------
+# OS / Editor
+# -----------------------------
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# -----------------------------
+# Uploaded & Dataset Images
+# -----------------------------
+api/static/uploads/*
+api/static/products/*
+dataset/
+data/
+images/
+
+# -----------------------------
+# Feedback store (optional)
+# -----------------------------
+feedback/feedback_store.json
+
+# -----------------------------
+# Model / Cache
+# -----------------------------
+*.pt
+*.pth
+*.onnx
+*.npy
+
+# -----------------------------
+# Flask cache / temp
+# -----------------------------
+instance/

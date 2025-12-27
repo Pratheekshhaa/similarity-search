@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Search Results</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .home-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: white;
+            color: #1a1a1a;
+            text-decoration: none;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 15px;
+            transition: all 0.2s;
+        }
+
+        .home-button:hover {
+            background: #f8f9fa;
+            border-color: #1a1a1a;
+        }
+
+        .home-icon {
+            font-size: 18px;
+        }
+
+        .header-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Query Section */
+        .query-section {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .query-image-container {
+            position: sticky;
+            top: 20px;
+        }
+
+        .query-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            display: block;
+        }
+
+        .query-details {
+            padding-top: 10px;
+        }
+
+        .query-details h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #1a1a1a;
+        }
+
+        .attribute {
+            display: flex;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        .attribute:last-child {
+            border-bottom: none;
+        }
+
+        .attribute-label {
+            font-weight: 600;
+            color: #555;
+            min-width: 140px;
+        }
+
+        .attribute-value {
+            color: #1a1a1a;
+            font-weight: 500;
+        }
+
+        /* Similar Products Section */
+        .similar-section {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .similar-section h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: #1a1a1a;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .product-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-color: #d0d0d0;
+        }
+
+        .product-image-container {
+            width: 100%;
+            height: 280px;
+            background: #fafafa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .product-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .product-details {
+            padding: 20px;
+        }
+
+        .product-info {
+            margin-bottom: 12px;
+        }
+
+        .product-info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .info-label {
+            color: #666;
+            font-weight: 500;
+        }
+
+        .info-value {
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        .similarity-badge {
+            display: inline-block;
+            background: #f0f7ff;
+            color: #0066c0;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .shape-match {
+            font-size: 18px;
+        }
+
+        .feedback-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #e8e8e8;
+        }
+
+        .feedback-buttons button {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #d0d0d0;
+            background: white;
+            border-radius: 6px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .feedback-buttons button:hover {
+            background: #f8f9fa;
+            border-color: #a0a0a0;
+        }
+
+        .feedback-buttons button:active {
+            transform: scale(0.95);
+        }
+
+        /* Why This Result Section */
+        .why-section {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #e8e8e8;
+        }
+
+        .why-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .match-reasons {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .match-reason {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #1a1a1a;
+        }
+
+        .match-icon {
+            color: #2d8659;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .query-section {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .query-image-container {
+                position: relative;
+                top: 0;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 15px;
+            }
+
+            .header-title {
+                font-size: 16px;
+            }
+
+            .home-button {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+
+            .container {
+                padding: 30px 15px;
+            }
+
+            .query-section,
+            .similar-section {
+                padding: 20px;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 16px;
+            }
+
+            .product-image-container {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <a href="/" class="home-button">
+                <span class="home-icon">🏠</span>
+                <span>Home</span>
+            </a>
+            <h1 class="header-title">Visual Search Results</h1>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Query Section -->
+        <div class="query-section">
+            <div class="query-image-container">
+                <img src="{{ url_for('static', filename='uploads/' + query_image) }}" class="query-image"
+                    alt="Query Image">
+            </div>
+
+            <div class="query-details">
+                <h2>Detected Attributes</h2>
+                <div class="attribute">
+                    <span class="attribute-label">Frame Shape:</span>
+                    <span class="attribute-value">{{ query_shape }}</span>
+                </div>
+                <div class="attribute">
+                    <span class="attribute-label">Frame Color:</span>
+                    <span class="attribute-value">{{ query_color }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Similar Products Section -->
+        <div class="similar-section">
+            <h2>Similar Products</h2>
+
+            <div class="products-grid">
+                {% for r in results %}
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="{{ url_for('static', filename='products/' + r.image) }}" class="product-image"
+                            alt="Product Image">
+                    </div>
+
+                    <div class="product-details">
+                        <div class="product-info">
+                            <div class="product-info-row">
+                                <span class="info-label">Similarity:</span>
+                                <span class="similarity-badge">{{ r.match_percent }}%</span>
+                            </div>
+                            <div class="product-info-row">
+                                <span class="info-label">Color:</span>
+                                <span class="info-value">{{ r.color }}</span>
+                            </div>
+                            <div class="product-info-row">
+                                <span class="info-label">Shape Match:</span>
+                                <span class="info-value shape-match">
+                                    {% if r.shape_match is not none %}
+                                    {% if r.shape_match %}
+                                    ✅
+                                    {% else %}
+                                    ❌
+                                    {% endif %}
+                                    {% else %}
+                                    N/A
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="why-section">
+                            <div class="why-title">Why this result?</div>
+                            <div class="match-reasons">
+                                {% if r.color_match %}
+                                <div class="match-reason">
+                                    <span class="match-icon">✓</span>
+                                    <span>Same color match</span>
+                                </div>
+                                {% endif %}
+                                {% if r.shape_match %}
+                                <div class="match-reason">
+                                    <span class="match-icon">✓</span>
+                                    <span>Matching frame shape</span>
+                                </div>
+                                {% endif %}
+                                <div class="match-reason">
+                                    <span class="match-icon">✓</span>
+                                    <span>High visual similarity</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form method="POST" action="/feedback">
+                            <input type="hidden" name="image" value="{{ r.image }}">
+                            <div class="feedback-buttons">
+                                <button name="action" value="relevant" title="Relevant">👍</button>
+                                <button name="action" value="not_relevant" title="Not Relevant">👎</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
