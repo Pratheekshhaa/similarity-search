@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Which Glasses Suit Me?</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8f9fa;
+            padding: 40px;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+        }
+        img {
+            max-width: 300px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            margin-top: 20px;
+        }
+        ul {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Which Glasses Suit Me?</h1>
+
+    <img src="{{ url_for('static', filename='uploads/' + query_image) }}">
+
+    <h2>Detected Face Shape</h2>
+    <p><b>{{ face_shape }}</b></p>
+
+    <h2>Recommended Frame Styles</h2>
+    <ul>
+        {% for frame in recommended_frames %}
+        <li>{{ frame }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Why?</h2>
+    <ul>
+        {% for reason in explanation %}
+        <li>{{ reason }}</li>
+        {% endfor %}
+    </ul>
+
+    <br>
+    <a href="/">← Back to Home</a>
+</div>
+
+</body>
+</html>

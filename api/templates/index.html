@@ -1,36 +1,616 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Eyewear AI</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eyewear AI - Smart Visual Search</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f8f9fa;
+            color: #1a1a1a;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            font-size: 20px;
+            color: #666;
+            font-weight: 400;
+        }
+
+        /* Card Grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px 32px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #1a1a1a;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+            border-color: #1a1a1a;
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-icon {
+            font-size: 56px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .card h2 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .card small {
+            display: inline-block;
+            background: #fff3cd;
+            color: #856404;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            margin-top: 8px;
+        }
+
+        /* Visual Search Box */
+        .visual-search-box {
+            background: white;
+            border-radius: 16px;
+            padding: 48px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .visual-search-box h2 {
+            font-size: 32px;
+            font-weight: 600;
+            text-align: center;
+            color: #1a1a1a;
+            margin-bottom: 40px;
+        }
+
+        .search-options {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .option-section {
+            padding: 24px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border: 2px solid #e8eef5;
+        }
+
+        .option-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .option-icon {
+            font-size: 24px;
+        }
+
+        /* File Upload Styling */
+        .file-upload-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            padding: 16px;
+            border: 2px dashed #d0d7de;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            font-size: 15px;
+            transition: all 0.2s;
+        }
+
+        input[type="file"]:hover {
+            border-color: #1a1a1a;
+            background: #fafafa;
+        }
+
+        /* Buttons */
+        button {
+            width: 100%;
+            padding: 16px 32px;
+            background: #1a1a1a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            background: #2d2d2d;
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button.secondary {
+            background: white;
+            color: #1a1a1a;
+            border: 2px solid #d0d0d0;
+            box-shadow: none;
+        }
+
+        button.secondary:hover {
+            background: #f8f9fa;
+            border-color: #1a1a1a;
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 32px 0;
+            color: #999;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .divider span {
+            padding: 0 16px;
+        }
+
+        /* Camera Section */
+        .camera-box {
+            margin-top: 24px;
+            text-align: center;
+        }
+
+        video,
+        canvas {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 12px;
+            margin: 20px auto;
+            display: block;
+            border: 3px solid #e8eef5;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .camera-controls {
+            margin-top: 20px;
+        }
+
+        /* Back Button */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            color: #1a1a1a;
+            border: 2px solid #e0e0e0;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 32px;
+            box-shadow: none;
+        }
+
+        .back-button:hover {
+            background: #f8f9fa;
+            border-color: #1a1a1a;
+            transform: translateX(-4px);
+        }
+
+        /* Hidden Class */
+        .hidden {
+            display: none;
+        }
+
+        #guideBox {
+            position: absolute;
+            top: 20%;
+            left: 25%;
+            width: 50%;
+            height: 40%;
+            border: 3px dashed rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            pointer-events: none;
+        }
+
+        #cameraBox video {
+            width: 100%;
+            border-radius: 12px;
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 20px;
+            }
+
+            .header h1 {
+                font-size: 36px;
+            }
+
+            .header p {
+                font-size: 18px;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .visual-search-box {
+                padding: 32px 24px;
+            }
+
+            .visual-search-box h2 {
+                font-size: 26px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-
-<div class="container">
-    <h1>Visual Eyewear AI Platform</h1>
-
-    <div class="card-grid">
-        <div class="card">
-            <h2>🔍 Visual Similarity Search</h2>
-            <p>Upload or capture an image to find similar eyewear products.</p>
-            <form action="/search" method="post" enctype="multipart/form-data">
-                <input type="file" name="image" accept="image/*" capture>
-                <br><br>
-                <button type="submit">Search Similar Glasses</button>
-            </form>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Eyewear AI Platform</h1>
+            <p>Discover your perfect eyewear with intelligent visual search</p>
         </div>
 
-        <div class="card">
-            <h2>😎 Which Glasses Suit Me?</h2>
-            <p>Upload your photo and get recommendations that suit your face.</p>
-            <form action="/search" method="post" enctype="multipart/form-data">
-                <input type="file" name="image" accept="image/*" capture>
-                <br><br>
-                <button type="submit">Check Suitability</button>
-            </form>
+        <!-- Home Options -->
+        <div class="card-grid" id="homeOptions">
+            <div class="card" onclick="openVisualSearch()">
+                <span class="card-icon">🔍</span>
+                <h2>Visual Similarity Search</h2>
+                <p>Find visually similar eyewear using image upload or webcam capture. Get instant matches from our
+                    extensive collection.</p>
+            </div>
+            <div class="card" onclick="openSuitability()">
+                <span class="card-icon">😎</span>
+                <h2>Which Glasses Suit Me?</h2>
+                <p>Upload or capture your photo to get frame recommendations.</p>
+            </div>
+
         </div>
+
+        <!-- Visual Search Box -->
+        <div class="visual-search-box hidden" id="visualSearchBox">
+            <button class="back-button" onclick="goBack()">
+                <span>←</span>
+                <span>Back to Home</span>
+            </button>
+
+            <h2>Visual Similarity Search</h2>
+
+            <div class="search-options">
+                <!-- Upload Option -->
+                <div class="option-section">
+                    <div class="option-title">
+                        <span class="option-icon">📤</span>
+                        <span>Upload Image</span>
+                    </div>
+                    <form action="/search" method="post" enctype="multipart/form-data">
+                        <div class="file-upload-wrapper">
+                            <input type="file" name="image" accept="image/*" required>
+                        </div>
+                        <button type="submit" style="margin-top: 16px;">Search Using Uploaded Image</button>
+                    </form>
+                </div>
+
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+
+                <!-- Webcam Option -->
+                <div class="option-section">
+                    <div class="option-title">
+                        <span class="option-icon">📸</span>
+                        <span>Use Webcam</span>
+                    </div>
+                    <button class="secondary" onclick="startCamera()">Activate Camera</button>
+
+                    <div id="cameraBox" class="camera-box hidden">
+                        <video id="video" autoplay></video>
+                        <div id="guideBox"></div>
+                        <br>
+                        <button onclick="captureImage()">Capture & Search</button>
+                        <canvas id="canvas" class="hidden"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Suitability Box -->
+        <div class="visual-search-box hidden" id="suitabilityBox">
+            <button class="back-button" onclick="goBackSuitability()">
+                <span>←</span>
+                <span>Back to Home</span>
+            </button>
+
+            <h2>Which Glasses Suit Me?</h2>
+
+            <div class="search-options">
+
+                <!-- Upload Option -->
+                <div class="option-section">
+                    <div class="option-title">
+                        <span class="option-icon">📤</span>
+                        <span>Upload Your Photo</span>
+                    </div>
+
+                    <form action="/suitability" method="post" enctype="multipart/form-data">
+                        <input type="file" name="image" accept="image/*" required>
+                        <button type="submit" style="margin-top:16px">
+                            Check Suitability
+                        </button>
+                    </form>
+                </div>
+
+                <div class="divider"><span>OR</span></div>
+
+                <!-- Webcam Option -->
+                <div class="option-section">
+                    <div class="option-title">
+                        <span class="option-icon">📸</span>
+                        <span>Use Webcam</span>
+                    </div>
+
+                    <button class="secondary" onclick="startSuitabilityCamera()">
+                        Activate Camera
+                    </button>
+
+                    <div id="suitabilityCameraBox" class="camera-box hidden">
+                        <video id="suitabilityVideo" autoplay></video>
+                        <div id="guideBox"></div>
+                        <button type="button" onclick="captureImage()">Capture & Search</button>
+                        <canvas id="suitabilityCanvas" class="hidden"></canvas>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </div>
-</div>
 
+    <script>
+        function openVisualSearch() {
+            document.getElementById("homeOptions").classList.add("hidden");
+            document.getElementById("visualSearchBox").classList.remove("hidden");
+        }
+
+        function goBack() {
+            document.getElementById("visualSearchBox").classList.add("hidden");
+            document.getElementById("homeOptions").classList.remove("hidden");
+
+            // Stop camera if it's running
+            if (videoStream) {
+                videoStream.getTracks().forEach(track => track.stop());
+            }
+            document.getElementById("cameraBox").classList.add("hidden");
+        }
+
+        let videoStream;
+
+        function startCamera() {
+            const video = document.getElementById("video");
+            const cameraBox = document.getElementById("cameraBox");
+            cameraBox.classList.remove("hidden");
+
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+                .then(stream => {
+                    videoStream = stream;
+                    video.srcObject = stream;
+                })
+                .catch(err => {
+                    alert("Camera access denied or not available.");
+                    console.error(err);
+                });
+        }
+
+        function captureImage() {
+            const video = document.getElementById("video");
+            const canvas = document.getElementById("canvas");
+            const ctx = canvas.getContext("2d");
+
+            // 🔑 VERY IMPORTANT: set canvas size
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            // Draw frame
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // ---- Brightness + Contrast Boost ----
+            const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imgData.data;
+
+            const brightness = 15;   // 10–20
+            const contrast = 1.1;    // 1.05–1.2
+
+            for (let i = 0; i < data.length; i += 4) {
+                data[i] = Math.min(255, data[i] * contrast + brightness); // R
+                data[i + 1] = Math.min(255, data[i + 1] * contrast + brightness); // G
+                data[i + 2] = Math.min(255, data[i + 2] * contrast + brightness); // B
+            }
+
+            ctx.putImageData(imgData, 0, 0);
+
+            // Stop camera
+            if (videoStream) {
+                videoStream.getTracks().forEach(track => track.stop());
+            }
+
+            // 🔑 Convert canvas to image & send to backend
+            canvas.toBlob(blob => {
+                const formData = new FormData();
+                formData.append("image", blob, "webcam_capture.jpg");
+
+                fetch("/search", {
+                    method: "POST",
+                    body: formData
+                })
+                    .then(res => res.text())
+                    .then(html => {
+                        // Replace page with results
+                        document.open();
+                        document.write(html);
+                        document.close();
+                    })
+                    .catch(err => {
+                        alert("Failed to process image");
+                        console.error(err);
+                    });
+            }, "image/jpeg");
+        }
+        let suitabilityStream;
+
+        function openSuitability() {
+            document.getElementById("homeOptions").classList.add("hidden");
+            document.getElementById("suitabilityBox").classList.remove("hidden");
+        }
+
+        function goBackSuitability() {
+            document.getElementById("suitabilityBox").classList.add("hidden");
+            document.getElementById("homeOptions").classList.remove("hidden");
+
+            if (suitabilityStream) {
+                suitabilityStream.getTracks().forEach(t => t.stop());
+            }
+
+            document.getElementById("suitabilityCameraBox").classList.add("hidden");
+        }
+
+        function startSuitabilityCamera() {
+            const video = document.getElementById("suitabilityVideo");
+            const box = document.getElementById("suitabilityCameraBox");
+            box.classList.remove("hidden");
+
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    suitabilityStream = stream;
+                    video.srcObject = stream;
+                })
+                .catch(() => alert("Camera not available"));
+        }
+
+        function captureSuitabilityImage() {
+            const video = document.getElementById("suitabilityVideo");
+            const canvas = document.getElementById("suitabilityCanvas");
+
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(video, 0, 0);
+
+            canvas.toBlob(blob => {
+                const formData = new FormData();
+                formData.append("image", blob, "webcam_face.jpg");
+
+                fetch("/suitability", {
+                    method: "POST",
+                    body: formData
+                }).then(res => {
+                    if (res.redirected) {
+                        window.location.href = res.url;
+                    }
+                });
+            }, "image/jpeg");
+        }
+
+    </script>
 </body>
+
 </html>

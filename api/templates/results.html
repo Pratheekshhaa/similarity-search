@@ -435,10 +435,9 @@
 
                         <form method="POST" action="/feedback">
                             <input type="hidden" name="image" value="{{ r.image }}">
-                            <div class="feedback-buttons">
-                                <button name="action" value="relevant" title="Relevant">👍</button>
-                                <button name="action" value="not_relevant" title="Not Relevant">👎</button>
-                            </div>
+                            <input type="hidden" name="next" value="{{ request.path }}">
+                            <button name="action" value="relevant">👍</button>
+                            <button name="action" value="not_relevant">👎</button>
                         </form>
                     </div>
                 </div>

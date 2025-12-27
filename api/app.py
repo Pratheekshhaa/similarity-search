@@ -9,6 +9,8 @@ from feedback.feedback_boost import record_feedback
 from attributes.attribute_classifier import classify_shape
 from search.ranking import rerank_results
 from attributes.color_detector import detect_frame_color
+from api.suitability import analyze_face
+
 
 # ---------------------------------------------------------
 # CONFIG
@@ -63,6 +65,19 @@ def search():
 
     with open(upload_path, "wb") as f:
         f.write(image_bytes)
+    # -----------------------------------------------------
+    # Detect if image came from webcam
+    # -----------------------------------------------------
+    is_webcam = file.filename.startswith("webcam")
+
+    if is_webcam:
+        try:
+            from ingestion.webcam_preprocess import crop_face_region
+            crop_face_region(upload_path)
+            with open(upload_path, "rb") as f:
+                image_bytes = f.read()
+        except Exception as e:
+            print("[WARN] Webcam preprocessing failed:", e)
 
     # -----------------------------------------------------
     # Query image processing
@@ -85,9 +100,10 @@ def search():
     query_color = detect_frame_color(upload_path)
 
     # -----------------------------------------------------
-    # Visual similarity search
+    # Retrieval (UPLOAD + WEBCAM)
     # -----------------------------------------------------
 
+    # Always use similarity search
     results = search_similar(query_embedding, top_k=10)
 
     # Remove self-match
@@ -97,7 +113,7 @@ def search():
         if r["image"].lower() != uploaded_name
     ]
 
-    # Keep top 5 only
+    # Keep top 5
     results = results[:5]
 
     # -----------------------------------------------------
@@ -148,12 +164,36 @@ def search():
         )
 
         r["match_percent"] = round(r["final_score"] * 100, 2)
-
-    # ✅ MUST be outside
+    
+   # ✅ MUST be outside
     results = sorted(results, key=lambda x: x["final_score"], reverse=True)
 
-    
-        
+@app.route("/suitability", methods=["POST"])
+def suitability():
+    if "image" not in request.files:
+        return redirect(url_for("home"))
+
+    file = request.files["image"]
+    if file.filename == "":
+        return redirect(url_for("home"))
+
+    # Save image
+    upload_path = os.path.join(app.config["UPLOAD_FOLDER"], file.filename)
+    file.save(upload_path)
+
+    # Phase 1: stub analysis
+    analysis = analyze_face(upload_path)
+
+    return render_template(
+        "suitability.html",
+        query_image=file.filename,
+        face_shape=analysis["face_shape"],
+        recommended_frames=analysis["recommended_frames"],
+        explanation=analysis["explanation"]
+    )
+
+
+          
     # -----------------------------------------------------
     # Render results
     # -----------------------------------------------------
@@ -166,11 +206,11 @@ def search():
         results=results
     )
 
-
 @app.route("/feedback", methods=["POST"])
 def feedback():
     image_name = request.form.get("image")
     action = request.form.get("action")
+    next_page = request.form.get("next")
 
     if image_name and action:
         record_feedback(
@@ -178,8 +218,8 @@ def feedback():
             relevant=(action == "relevant")
         )
 
-    return redirect(request.referrer)
-
+    # 🔑 Always return to results page
+    return redirect(next_page or url_for("home"))
 
 # ---------------------------------------------------------
 # RUN

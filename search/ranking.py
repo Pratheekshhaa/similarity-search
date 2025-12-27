@@ -11,9 +11,6 @@ Signals used:
 
 Ranking is transparent and explainable.
 """
-
-from feedback.feedback_boost import apply_feedback_boost
-
 # ---------------------------------------------------------
 # WEIGHTS (tuneable)
 # ---------------------------------------------------------
@@ -75,24 +72,14 @@ def compute_filter_score(result, applied_filters=None):
 
 def rerank_results(results, query_shape=None, applied_filters=None):
     """
-    Combine similarity + feedback + optional bonuses.
-
-    Args:
-        results: list from visual_search.py
-        query_shape: output from attribute_classifier
-        applied_filters: dict of filters applied
-
-    Returns:
-        Re-ranked list of results
+    Combine similarity + optional bonuses.
+    Feedback is handled at app-level.
     """
-
-    # Step 1: feedback learning
-    boosted = apply_feedback_boost(results)
 
     final_ranked = []
 
-    for r in boosted:
-        sim_score = r["score"]
+    for r in results:
+        sim_score = r.get("score", 0)
 
         attr_score = compute_attribute_score(r, query_shape)
         filter_score = compute_filter_score(r, applied_filters)
