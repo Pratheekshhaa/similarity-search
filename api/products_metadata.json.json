@@ -1,0 +1,688 @@
+{
+  "prod_00011.jpg": {
+    "frame_shape": "round",
+    "frame_color": "clear",
+    "brand": "Lenskart Air",
+    "material": "TR90",
+    "price": 1599
+  },
+  "prod_00023.jpg": {
+    "frame_shape": "round",
+    "frame_color": "translucent green",
+    "brand": "Vincent Chase",
+    "material": "acetate",
+    "price": 999
+  },
+  "prod_00000.jpg": {
+    "frame_shape": "round",
+    "frame_color": "rose gold",
+    "brand": "John Jacobs",
+    "material": "metal",
+    "price": 4200
+  },
+  "prod_00005.jpg": {
+    "frame_shape": "round",
+    "frame_color": "translucent pink",
+    "brand": "Lenskart Air",
+    "material": "acetate",
+    "price": 1800
+  },
+  "prod_00017.jpg": {
+    "frame_shape": "round",
+    "frame_color": "translucent grey",
+    "brand": "Hustlr",
+    "material": "ultem",
+    "price": 1200
+  },
+  "prod_00041.jpg": {
+    "frame_shape": "cat-eye",
+    "frame_color": "gunmetal silver",
+    "brand": "Vincent Chase",
+    "material": "stainless steel",
+    "price": 1999
+  },
+  "prod_00047.jpg": {
+    "frame_shape": "rectangular",
+    "frame_color": "matte black",
+    "brand": "Lenskart Blu",
+    "material": "tr90",
+    "price": 2500
+  },
+  "prod_00035.jpg": {
+    "frame_shape": "round",
+    "frame_color": "black",
+    "brand": "John Jacobs",
+    "material": "titanium",
+    "price": 5000
+  },
+  "prod_00029.jpg": {
+    "frame_shape": "round",
+    "frame_color": "translucent honey orange",
+    "brand": "Vincent Chase",
+    "material": "acetate",
+    "price": 1400
+  },
+  "prod_00053.jpg": {
+    "frame_shape": "rectangular",
+    "frame_color": "translucent magenta",
+    "brand": "Lenskart Air",
+    "material": "polycarbonate",
+    "price": 1600
+  },
+  "prod_00057.jpg": {
+    "frame_shape": "rectangular",
+    "frame_color": "tortoise shell",
+    "brand": "Vincent Chase",
+    "material": "acetate",
+    "price": 1300
+  },
+  "prod_00081.jpg": {
+    "frame_shape": "cat-eye",
+    "frame_color": "woodgrain brown",
+    "brand": "Lenskart Air",
+    "material": "wood-texture acetate",
+    "price": 2200
+  },
+  "prod_00069.jpg": {
+    "frame_shape": "geometric",
+    "frame_color": "silver",
+    "brand": "John Jacobs",
+    "material": "metal",
+    "price": 3800
+  },
+  "prod_00075.jpg": {
+    "frame_shape": "geometric",
+    "frame_color": "bronze",
+    "brand": "Vincent Chase",
+    "material": "stainless steel",
+    "price": 1700
+  },
+  "prod_00065.jpg": {
+    "frame_shape": "round",
+    "frame_color": "rose gold",
+    "brand": "Lenskart Blu",
+    "material": "metal",
+    "price": 2900
+  },
+  "prod_00061.jpg": {
+    "frame_shape": "round",
+    "frame_color": "silver",
+    "brand": "Hustlr",
+    "material": "metal",
+    "price": 1100
+  },
+  "prod_00086.jpg": {
+    "frame_shape": "cat-eye",
+    "frame_color": "dark woodgrain",
+    "brand": "Vincent Chase",
+    "material": "hand-polished acetate",
+    "price": 1499
+  },
+  "prod_00105.jpg": {
+    "frame_shape": "aviator",
+    "frame_color": "clear",
+    "brand": "Lenskart Air",
+    "material": "TR90",
+    "price": 2500
+  },
+  "prod_00096.jpg": {
+    "frame_shape": "rectangular",
+    "frame_color": "matte orange",
+    "brand": "Hustlr",
+    "material": "polycarbonate",
+    "price": 999
+  },
+  "prod_00100.jpg": {
+    "frame_shape": "aviator",
+    "frame_color": "tortoise shell",
+    "brand": "John Jacobs",
+    "material": "bio-acetate",
+    "price": 4200
+  },
+  "prod_00091.jpg": {
+    "frame_shape": "cat-eye",
+    "frame_color": "striped ebony",
+    "brand": "Lenskart Blu",
+    "material": "acetate",
+    "price": 3100
+  },
+  "prod_00110.jpg": {
+    "frame_shape": "rectangular",
+    "frame_color": "matte burgundy",
+    "brand": "Lenskart Air",
+    "material": "ultem",
+    "price": 2800
+  },
+  "prod_00112.jpg": {
+    "frame_shape": "rectangular",
+    "frame_color": "matte burgundy",
+    "brand": "Lenskart Air",
+    "material": "ultem",
+    "price": 2800
+  },
+  "prod_00111.jpg": {
+    "frame_shape": "rectangular",
+    "frame_color": "matte burgundy",
+    "brand": "Lenskart Air",
+    "material": "ultem",
+    "price": 2800
+  },
+  "prod_00115.jpg": {
+    "frame_shape": "rectangular",
+    "frame_color": "matte black",
+    "brand": "Lenskart Blu",
+    "material": "tr90",
+    "price": 3200
+  },
+  "prod_00125.jpg": {
+    "frame_shape": "oval",
+    "frame_color": "polished black",
+    "brand": "Vincent Chase",
+    "material": "acetate",
+    "price": 1999
+  },
+  "prod_00113.jpg": {
+    "frame_shape": "rectangular",
+    "frame_color": "matte burgundy",
+    "brand": "Lenskart Air",
+    "material": "ultem",
+    "price": 2800
+  },
+  "prod_00120.jpg": {
+    "frame_shape": "rectangular",
+    "frame_color": "matte black",
+    "brand": "John Jacobs",
+    "material": "titanium",
+    "price": 5400
+  },
+  "prod_00133.jpg": {
+    "frame_shape": "oval",
+    "frame_color": "royal blue",
+    "brand": "Lenskart Air",
+    "material": "TR90",
+    "price": 1800
+  },
+  "prod_00137.jpg": {
+    "frame_shape": "square",
+    "frame_color": "dark tortoise shell",
+    "brand": "Vincent Chase",
+    "material": "acetate",
+    "price": 2400
+  },
+  "prod_00129.jpg": {
+    "frame_shape": "oval",
+    "frame_color": "amber tortoise shell",
+    "brand": "John Jacobs",
+    "material": "bio-acetate",
+    "price": 4100
+  },
+  "prod_00146.jpg": {
+    "frame_shape": "geometric cat-eye",
+    "frame_color": "translucent rose pink",
+    "brand": "Lenskart Blu",
+    "material": "polycarbonate",
+    "price": 3100
+  },
+  "prod_00151.jpg": {
+    "frame_shape": "geometric cat-eye",
+    "frame_color": "translucent honey yellow",
+    "brand": "Vincent Chase",
+    "material": "acetate",
+    "price": 1999
+  },
+  "prod_00141.jpg": {
+    "frame_shape": "geometric cat-eye",
+    "frame_color": "classic tortoise shell",
+    "brand": "John Jacobs",
+    "material": "premium acetate",
+    "price": 5200
+  }, 
+  "prod_00156.jpg": {
+    "frame_shape": "geometric cat-eye",
+    "frame_color": "translucent blue",
+    "brand": "Lenskart Air",
+    "material": "ultem",
+    "price": 2800
+  },
+  "prod_00176.jpg": {
+    "frame_shape": "roundish cat-eye",
+    "frame_color": "translucent champagne",
+    "brand": "Vincent Chase",
+    "material": "acetate",
+    "price": 1999
+  },
+  "prod_00185.jpg": {
+    "frame_shape": "roundish square",
+    "frame_color": "translucent grey",
+    "brand": "Lenskart Air",
+    "material": "TR90",
+    "price": 2500
+  },
+  "prod_00161.jpg": {
+    "frame_shape": "oval",
+    "frame_color": "matte cream",
+    "brand": "John Jacobs",
+    "material": "titanium",
+    "price": 5400
+  },
+  "prod_00171.jpg": {
+    "frame_shape": "roundish cat-eye",
+    "frame_color": "translucent rose pink",
+    "brand": "Vincent Chase",
+    "material": "bio-acetate",
+    "price": 1800
+  },
+  "prod_00181.jpg": {
+    "frame_shape": "oversized square",
+    "frame_color": "grey tortoise shell",
+    "brand": "John Jacobs",
+    "material": "premium acetate",
+    "price": 4200
+  },
+  "prod_00166.jpg": {
+    "frame_shape": "roundish square",
+    "frame_color": "translucent ruby red",
+    "brand": "Lenskart Blu",
+    "material": "polycarbonate",
+    "price": 3100
+  },
+  "prod_00204.jpg": {
+    "frame_shape": "cat-eye",
+    "frame_color": "purple gradient",
+    "brand": "Vincent Chase",
+    "material": "acetate",
+    "price": 2400
+  },
+  "prod_00208.jpg": {
+    "frame_shape": "rectangular",
+    "frame_color": "translucent blue",
+    "brand": "Lenskart Air",
+    "material": "ultem",
+    "price": 3100
+  },
+  "prod_00216.jpg": {
+    "frame_shape": "geometric",
+    "frame_color": "matte black",
+    "brand": "Hustlr",
+    "material": "TR90",
+    "price": 1800
+  },
+  "prod_00191.jpg": {
+    "frame_shape": "round",
+    "frame_color": "nude pink",
+    "brand": "John Jacobs",
+    "material": "titanium",
+    "price": 5200
+  },
+  "prod_00212.jpg": {
+    "frame_shape": "rectangular",
+    "frame_color": "clear",
+    "brand": "Lenskart Blu",
+    "material": "polycarbonate",
+    "price": 3500
+  },
+  "prod_00196.jpg": {
+    "frame_shape": "aviator",
+    "frame_color": "black",
+    "brand": "Vincent Chase",
+    "material": "stainless steel",
+    "price": 1999
+  },
+  "prod_00200.jpg": {
+    "frame_shape": "aviator",
+    "frame_color": "bronze",
+    "brand": "John Jacobs",
+    "material": "metal",
+    "price": 4100
+  },
+  "prod_00228.jpg": {
+    "frame_shape": "rectangular",
+    "frame_color": "matte black",
+    "brand": "Lenskart Air",
+    "material": "TR90",
+    "price": 2800
+  },
+  "prod_00262.jpg": {
+    "frame_shape": "round",
+    "frame_color": "rose gold",
+    "brand": "John Jacobs",
+    "material": "stainless steel",
+    "price": 4200
+  },
+  "prod_00238.jpg": {
+    "frame_shape": "aviator",
+    "frame_color": "polished gold",
+    "brand": "Vincent Chase",
+    "material": "metal",
+    "price": 1999
+  },
+  "prod_00256.jpg": {
+    "frame_shape": "round",
+    "frame_color": "gold",
+    "brand": "John Jacobs",
+    "material": "titanium",
+    "price": 5400
+  },
+  "prod_00222.jpg": {
+    "frame_shape": "geometric square",
+    "frame_color": "dark tortoise shell",
+    "brand": "Vincent Chase",
+    "material": "bio-acetate",
+    "price": 2400
+  },
+  "prod_00250.jpg": {
+    "frame_shape": "round",
+    "frame_color": "black",
+    "brand": "Lenskart Blu",
+    "material": "stainless steel",
+    "price": 3100
+  },
+  "prod_00233.jpg": {
+    "frame_shape": "rectangular",
+    "frame_color": "matte charcoal grey",
+    "brand": "Lenskart Air",
+    "material": "ultem",
+    "price": 2500
+  },
+  "prod_00244.jpg": {
+    "frame_shape": "round",
+    "frame_color": "silver",
+    "brand": "John Jacobs",
+    "material": "metal",
+    "price": 3800
+  },
+  "prod_00281.jpg": {
+    "frame_shape": "geometric square",
+    "frame_color": "matte silver",
+    "brand": "John Jacobs",
+    "material": "titanium",
+    "price": 5400
+  },
+  "prod_00268.jpg": {
+    "frame_shape": "rectangular",
+    "frame_color": "black gunmetal",
+    "brand": "Lenskart Air",
+    "material": "stainless steel",
+    "price": 2800
+  },
+  "prod_00285.jpg": {
+    "frame_shape": "geometric square",
+    "frame_color": "matte gold",
+    "brand": "John Jacobs",
+    "material": "titanium",
+    "price": 5400
+  },
+  "prod_00273.jpg": {
+    "frame_shape": "geometric",
+    "frame_color": "antique bronze",
+    "brand": "John Jacobs",
+    "material": "metal",
+    "price": 4100
+  },
+  "prod_00277.jpg": {
+    "frame_shape": "geometric",
+    "frame_color": "matte black",
+    "brand": "John Jacobs",
+    "material": "stainless steel",
+    "price": 3100
+  },
+  "prod_00289.jpg": {
+    "frame_shape": "cat-eye",
+    "frame_color": "tortoise shell",
+    "brand": "Vincent Chase",
+    "material": "acetate",
+    "price": 2400
+  },
+  "prod_00312.jpg": {
+    "frame_shape": "aviator",
+    "frame_color": "matte brown",
+    "brand": "EyeBuyDirect",
+    "material": "plastic",
+    "price": 3200
+  },
+  "prod_00318.jpg": {
+    "frame_shape": "aviator",
+    "frame_color": "matte light blue",
+    "brand": "EyeBuyDirect",
+    "material": "plastic",
+    "price": 3200
+  },
+  "prod_00324.jpg": {
+    "frame_shape": "cat-eye",
+    "frame_color": "black",
+    "brand": "Zenni Optical",
+    "material": "acetate",
+    "price": 2500
+  },
+  "prod_00304.jpg": {
+    "frame_shape": "cat-eye",
+    "frame_color": "translucent magenta",
+    "brand": "Vooglam",
+    "material": "acetate",
+    "price": 2100
+  },
+  "prod_00294.jpg": {
+    "frame_shape": "round",
+    "frame_color": "clear",
+    "brand": "EyeBuyDirect",
+    "material": "plastic",
+    "price": 2800
+  },
+  "prod_00300.jpg": {
+    "frame_shape": "cat-eye",
+    "frame_color": "translucent mint green",
+    "brand": "Vooglam",
+    "material": "acetate",
+    "price": 2100
+  },
+  "prod_00308.jpg": {
+    "frame_shape": "cat-eye",
+    "frame_color": "tortoiseshell",
+    "brand": "Zenni Optical",
+    "material": "acetate",
+    "price": 2500
+  },
+  "prod_00329.jpg": {
+    "frame_shape": "oversized cat-eye",
+    "frame_color": "tortoiseshell",
+    "brand": "Zenni Optical",
+    "material": "acetate",
+    "price": 2600
+  },
+  "prod_00334.jpg": {
+    "frame_shape": "cat-eye",
+    "frame_color": "black with floral print",
+    "brand": "EyeBuyDirect",
+    "material": "metal and plastic",
+    "price": 3500
+  },
+  "prod_00338.jpg": {
+    "frame_shape": "cat-eye",
+    "frame_color": "silver with blue floral print",
+    "brand": "EyeBuyDirect",
+    "material": "metal and plastic",
+    "price": 3500
+  },
+  "prod_00342.jpg": {
+    "frame_shape": "cat-eye",
+    "frame_color": "black and gold",
+    "brand": "EyeBuyDirect",
+    "material": "metal",
+    "price": 4200
+  },
+  "prod_00367.jpg": {
+    "frame_shape": "geometric aviator",
+    "frame_color": "silver",
+    "brand": "EyeBuyDirect",
+    "material": "metal",
+    "price": 3800
+  },
+  "prod_00346.jpg": {
+    "frame_shape": "round semi-rimless",
+    "frame_color": "gunmetal",
+    "brand": "Zenni Optical",
+    "material": "metal",
+    "price": 2900
+  },
+  "prod_00357.jpg": {
+    "frame_shape": "geometric aviator",
+    "frame_color": "gold",
+    "brand": "EyeBuyDirect",
+    "material": "metal",
+    "price": 4200
+  },
+  "prod_00362.jpg": {
+    "frame_shape": "geometric aviator",
+    "frame_color": "brushed silver",
+    "brand": "EyeBuyDirect",
+    "material": "metal",
+    "price": 4200
+  },
+  "prod_00352.jpg": {
+    "frame_shape": "geometric aviator",
+    "frame_color": "matte black",
+    "brand": "EyeBuyDirect",
+    "material": "metal",
+    "price": 4200
+  },
+  "prod_00372.jpg": {
+    "frame_shape": "geometric aviator",
+    "frame_color": "bronze",
+    "brand": "EyeBuyDirect",
+    "material": "metal",
+    "price": 3800
+  },
+  "prod_00407.jpg": {
+    "frame_shape": "geometric cat-eye",
+    "frame_color": "vibrant blue and silver",
+    "brand": "EyeBuyDirect",
+    "material": "metal",
+    "price": 3500
+  },
+  "prod_00401.jpg": {
+    "frame_shape": "geometric cat-eye",
+    "frame_color": "tortoiseshell and gold",
+    "brand": "EyeBuyDirect",
+    "material": "acetate and metal",
+    "price": 3800
+  },
+  "prod_00413.jpg": {
+    "frame_shape": "oversized butterfly",
+    "frame_color": "classic tortoiseshell",
+    "brand": "Vooglam",
+    "material": "acetate",
+    "price": 2400
+  },
+  "prod_00377.jpg": {
+    "frame_shape": "rectangular",
+    "frame_color": "matte tortoiseshell (with sun clip-on)",
+    "brand": "Zenni Optical",
+    "material": "plastic",
+    "price": 3100
+  },
+  "prod_00381.jpg": {
+    "frame_shape": "rectangular",
+    "frame_color": "matte black (with sun clip-on)",
+    "brand": "Zenni Optical",
+    "material": "plastic",
+    "price": 3100
+  },
+  "prod_00395.jpg": {
+    "frame_shape": "geometric cat-eye",
+    "frame_color": "blue marble and silver",
+    "brand": "EyeBuyDirect",
+    "material": "acetate and metal",
+    "price": 3500
+  },
+  "prod_00390.jpg": {
+    "frame_shape": "oversized navigator",
+    "frame_color": "striped grey",
+    "brand": "EyeBuyDirect",
+    "material": "plastic",
+    "price": 2900
+  },
+  "prod_00385.jpg": {
+    "frame_shape": "oversized navigator",
+    "frame_color": "green and brown tortoiseshell",
+    "brand": "EyeBuyDirect",
+    "material": "plastic",
+    "price": 2900
+  },
+  "prod_00437.jpg": {
+    "frame_shape": "rectangular",
+    "frame_color": "brushed gunmetal",
+    "brand": "Oakley",
+    "material": "titanium",
+    "price": 8500
+  },
+  "prod_00441.jpg": {
+    "frame_shape": "round",
+    "frame_color": "rose gold",
+    "brand": "EyeBuyDirect",
+    "material": "metal",
+    "price": 3200
+  },
+  "prod_00421.jpg": {
+    "frame_shape": "square",
+    "frame_color": "dark burgundy",
+    "brand": "Zenni Optical",
+    "material": "acetate",
+    "price": 2800
+  },
+  "prod_00431.jpg": {
+    "frame_shape": "square",
+    "frame_color": "translucent grey",
+    "brand": "Warby Parker",
+    "material": "acetate",
+    "price": 7500
+  },
+  "prod_00425.jpg": {
+    "frame_shape": "square",
+    "frame_color": "champagne",
+    "brand": "Warby Parker",
+    "material": "acetate",
+    "price": 7500
+  },
+  "prod_00417.jpg": {
+    "frame_shape": "cat-eye",
+    "frame_color": "clear",
+    "brand": "Vooglam",
+    "material": "acetate",
+    "price": 2400
+  },
+  "prod_00460.jpg": {
+    "frame_shape": "geometric aviator",
+    "frame_color": "matte gunmetal",
+    "brand": "EyeBuyDirect",
+    "material": "metal",
+    "price": 3800
+  },
+  "prod_00446.jpg": {
+    "frame_shape": "square browline",
+    "frame_color": "matte black and gold",
+    "brand": "EyeBuyDirect",
+    "material": "mixed (acetate and metal)",
+    "price": 4200
+  },
+  "prod_00450.jpg": {
+    "frame_shape": "geometric aviator",
+    "frame_color": "polished gold",
+    "brand": "EyeBuyDirect",
+    "material": "metal",
+    "price": 3800
+  },
+  "prod_00455.jpg": {
+    "frame_shape": "geometric aviator",
+    "frame_color": "brushed silver",
+    "brand": "EyeBuyDirect",
+    "material": "metal",
+    "price": 3800
+  },
+  "prod_00465.jpg": {
+    "frame_shape": "rectangular",
+    "frame_color": "textured navy blue",
+    "brand": "Zenni Optical",
+    "material": "metal",
+    "price": 2900
+  }  
+}

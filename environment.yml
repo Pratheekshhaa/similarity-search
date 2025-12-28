@@ -1,0 +1,31 @@
+name: lenskartt
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - numpy
+  - pillow
+  - scikit-learn
+  - tqdm
+  - faiss-cpu
+  - pytorch
+  - torchvision
+  - pip
+  - pip:
+    - flask
+    - opencv-python
+
+# Usage:
+# 1) Create environment (recommended):
+#    conda env create -f environment.yml
+# 2) Activate:
+#    conda activate lenskartt
+# 3) Run the app:
+#    python -m api.app
+
+# Notes:
+# - On Windows, conda will install compatible builds of FAISS and PyTorch.
+# - If you need CUDA support, replace the `pytorch` / `torchvision` entries with
+#   the appropriate cudatoolkit/channel instructions from https://pytorch.org/get-started/locally/.

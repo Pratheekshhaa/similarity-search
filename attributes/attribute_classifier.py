@@ -133,15 +133,14 @@ def classify_shape(query_embedding: np.ndarray):
     best_dist = float("inf")
 
     q = query_embedding.astype("float32")
+    q = q / (np.linalg.norm(q) + 1e-8)   # 🔑 normalize query
+
 
     for shape, centroid in centroids.items():
         c = centroid.astype("float32")
 
         # cosine distance
-        dist = 1 - np.dot(q, c) / (
-            np.linalg.norm(q) * np.linalg.norm(c) + 1e-8
-        )
-
+        dist = 1 - np.dot(q, c)
         if dist < best_dist:
             best_dist = dist
             best_shape = shape

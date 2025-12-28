@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eyewear AI - Smart Visual Search</title>
+
     <style>
         * {
             margin: 0;
@@ -26,7 +27,6 @@
             padding: 60px 20px;
         }
 
-        /* Header Section */
         .header {
             text-align: center;
             margin-bottom: 60px;
@@ -35,7 +35,6 @@
         .header h1 {
             font-size: 48px;
             font-weight: 700;
-            color: #1a1a1a;
             margin-bottom: 16px;
             letter-spacing: -0.5px;
         }
@@ -43,10 +42,8 @@
         .header p {
             font-size: 20px;
             color: #666;
-            font-weight: 400;
         }
 
-        /* Card Grid */
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -96,30 +93,15 @@
 
         .card h2 {
             font-size: 24px;
-            font-weight: 600;
-            color: #1a1a1a;
             margin-bottom: 12px;
         }
 
         .card p {
             font-size: 16px;
             color: #666;
-            margin-bottom: 12px;
             line-height: 1.6;
         }
 
-        .card small {
-            display: inline-block;
-            background: #fff3cd;
-            color: #856404;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: 500;
-            margin-top: 8px;
-        }
-
-        /* Visual Search Box */
         .visual-search-box {
             background: white;
             border-radius: 16px;
@@ -131,9 +113,7 @@
 
         .visual-search-box h2 {
             font-size: 32px;
-            font-weight: 600;
             text-align: center;
-            color: #1a1a1a;
             margin-bottom: 40px;
         }
 
@@ -153,22 +133,10 @@
         .option-title {
             font-size: 18px;
             font-weight: 600;
-            color: #1a1a1a;
             margin-bottom: 16px;
             display: flex;
             align-items: center;
             gap: 10px;
-        }
-
-        .option-icon {
-            font-size: 24px;
-        }
-
-        /* File Upload Styling */
-        .file-upload-wrapper {
-            position: relative;
-            display: inline-block;
-            width: 100%;
         }
 
         input[type="file"] {
@@ -176,63 +144,32 @@
             padding: 16px;
             border: 2px dashed #d0d7de;
             border-radius: 8px;
-            background: white;
             cursor: pointer;
-            font-size: 15px;
-            transition: all 0.2s;
         }
 
-        input[type="file"]:hover {
-            border-color: #1a1a1a;
-            background: #fafafa;
-        }
-
-        /* Buttons */
         button {
             width: 100%;
-            padding: 16px 32px;
+            padding: 16px;
             background: #1a1a1a;
             color: white;
             border: none;
             border-radius: 8px;
             font-size: 16px;
-            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            background: #2d2d2d;
-        }
-
-        button:active {
-            transform: translateY(0);
+            margin-top: 16px;
         }
 
         button.secondary {
             background: white;
             color: #1a1a1a;
             border: 2px solid #d0d0d0;
-            box-shadow: none;
         }
 
-        button.secondary:hover {
-            background: #f8f9fa;
-            border-color: #1a1a1a;
-        }
-
-        /* Divider */
         .divider {
             display: flex;
             align-items: center;
-            text-align: center;
             margin: 32px 0;
             color: #999;
-            font-size: 14px;
-            font-weight: 500;
         }
 
         .divider::before,
@@ -246,216 +183,115 @@
             padding: 0 16px;
         }
 
-        /* Camera Section */
-        .camera-box {
-            margin-top: 24px;
-            text-align: center;
-        }
-
-        video,
+        .camera-box video,
         canvas {
             width: 100%;
             max-width: 400px;
             border-radius: 12px;
             margin: 20px auto;
             display: block;
-            border: 3px solid #e8eef5;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
-        .camera-controls {
-            margin-top: 20px;
-        }
-
-        /* Back Button */
-        .back-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: white;
-            color: #1a1a1a;
-            border: 2px solid #e0e0e0;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-bottom: 32px;
-            box-shadow: none;
-        }
-
-        .back-button:hover {
-            background: #f8f9fa;
-            border-color: #1a1a1a;
-            transform: translateX(-4px);
-        }
-
-        /* Hidden Class */
         .hidden {
             display: none;
         }
 
-        #guideBox {
-            position: absolute;
-            top: 20%;
-            left: 25%;
-            width: 50%;
-            height: 40%;
-            border: 3px dashed rgba(255, 255, 255, 0.8);
-            border-radius: 12px;
-            pointer-events: none;
-        }
-
-        #cameraBox video {
-            width: 100%;
-            border-radius: 12px;
-        }
-
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .container {
-                padding: 40px 20px;
-            }
-
-            .header h1 {
-                font-size: 36px;
-            }
-
-            .header p {
-                font-size: 18px;
-            }
-
-            .card-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .visual-search-box {
-                padding: 32px 24px;
-            }
-
-            .visual-search-box h2 {
-                font-size: 26px;
-            }
+        .back-button {
+            margin-bottom: 24px;
+            background: white;
+            color: #1a1a1a;
+            border: 2px solid #e0e0e0;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <!-- Header -->
+
         <div class="header">
             <h1>Eyewear AI Platform</h1>
             <p>Discover your perfect eyewear with intelligent visual search</p>
         </div>
 
-        <!-- Home Options -->
         <div class="card-grid" id="homeOptions">
             <div class="card" onclick="openVisualSearch()">
                 <span class="card-icon">🔍</span>
                 <h2>Visual Similarity Search</h2>
-                <p>Find visually similar eyewear using image upload or webcam capture. Get instant matches from our
-                    extensive collection.</p>
+                <p>Find visually similar eyewear using image upload or webcam capture.</p>
             </div>
+
             <div class="card" onclick="openSuitability()">
                 <span class="card-icon">😎</span>
                 <h2>Which Glasses Suit Me?</h2>
-                <p>Upload or capture your photo to get frame recommendations.</p>
+                <p>Upload your photo to get frame recommendations.</p>
             </div>
 
         </div>
 
-        <!-- Visual Search Box -->
         <div class="visual-search-box hidden" id="visualSearchBox">
-            <button class="back-button" onclick="goBack()">
-                <span>←</span>
-                <span>Back to Home</span>
-            </button>
+            <button class="back-button" onclick="goBack()">← Back to Home</button>
 
             <h2>Visual Similarity Search</h2>
 
             <div class="search-options">
-                <!-- Upload Option -->
                 <div class="option-section">
-                    <div class="option-title">
-                        <span class="option-icon">📤</span>
-                        <span>Upload Image</span>
-                    </div>
-                    <form action="/search" method="post" enctype="multipart/form-data">
-                        <div class="file-upload-wrapper">
-                            <input type="file" name="image" accept="image/*" required>
-                        </div>
-                        <button type="submit" style="margin-top: 16px;">Search Using Uploaded Image</button>
+                    <div class="option-title">📤 Upload Image</div>
+                    <form action="/search" method="POST" enctype="multipart/form-data">
+
+                        <!-- image upload -->
+                        <input type="file" name="image" required>
+
+                        <!-- BONUS 2: text query -->
+                        <input type="text" name="text_query" placeholder="Describe frame (e.g. round gold acetate)"
+                            style="width: 100%; padding: 12px; margin-top: 12px; border-radius: 8px; border: 1px solid #ccc;                            ">
+
+                        <!-- submit -->
+                        <button type="submit">Search</button>
+
                     </form>
+
                 </div>
 
-                <div class="divider">
-                    <span>OR</span>
-                </div>
+                <div class="divider"><span>OR</span></div>
 
-                <!-- Webcam Option -->
                 <div class="option-section">
-                    <div class="option-title">
-                        <span class="option-icon">📸</span>
-                        <span>Use Webcam</span>
-                    </div>
+                    <div class="option-title">📸 Use Webcam</div>
                     <button class="secondary" onclick="startCamera()">Activate Camera</button>
 
                     <div id="cameraBox" class="camera-box hidden">
                         <video id="video" autoplay></video>
-                        <div id="guideBox"></div>
-                        <br>
                         <button onclick="captureImage()">Capture & Search</button>
                         <canvas id="canvas" class="hidden"></canvas>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Suitability Box -->
         <div class="visual-search-box hidden" id="suitabilityBox">
-            <button class="back-button" onclick="goBackSuitability()">
-                <span>←</span>
-                <span>Back to Home</span>
-            </button>
+            <button class="back-button" onclick="goBackSuitability()">← Back to Home</button>
 
             <h2>Which Glasses Suit Me?</h2>
 
             <div class="search-options">
 
-                <!-- Upload Option -->
+                <!-- Upload -->
                 <div class="option-section">
-                    <div class="option-title">
-                        <span class="option-icon">📤</span>
-                        <span>Upload Your Photo</span>
-                    </div>
-
+                    <div class="option-title">📤 Upload Image</div>
                     <form action="/suitability" method="post" enctype="multipart/form-data">
                         <input type="file" name="image" accept="image/*" required>
-                        <button type="submit" style="margin-top:16px">
-                            Check Suitability
-                        </button>
+                        <button type="submit">Check Suitability</button>
                     </form>
                 </div>
 
                 <div class="divider"><span>OR</span></div>
 
-                <!-- Webcam Option -->
+                <!-- Webcam -->
                 <div class="option-section">
-                    <div class="option-title">
-                        <span class="option-icon">📸</span>
-                        <span>Use Webcam</span>
-                    </div>
-
-                    <button class="secondary" onclick="startSuitabilityCamera()">
-                        Activate Camera
-                    </button>
+                    <div class="option-title">📸 Use Webcam</div>
+                    <button class="secondary" onclick="startSuitabilityCamera()">Activate Camera</button>
 
                     <div id="suitabilityCameraBox" class="camera-box hidden">
                         <video id="suitabilityVideo" autoplay></video>
-                        <div id="guideBox"></div>
-                        <button type="button" onclick="captureImage()">Capture & Search</button>
+                        <button onclick="captureSuitabilityImage()">Capture & Analyze</button>
                         <canvas id="suitabilityCanvas" class="hidden"></canvas>
                     </div>
                 </div>
@@ -463,151 +299,113 @@
             </div>
         </div>
 
+
     </div>
 
     <script>
+        let videoStream;
+
         function openVisualSearch() {
-            document.getElementById("homeOptions").classList.add("hidden");
-            document.getElementById("visualSearchBox").classList.remove("hidden");
+            homeOptions.classList.add("hidden");
+            visualSearchBox.classList.remove("hidden");
         }
 
         function goBack() {
-            document.getElementById("visualSearchBox").classList.add("hidden");
-            document.getElementById("homeOptions").classList.remove("hidden");
-
-            // Stop camera if it's running
-            if (videoStream) {
-                videoStream.getTracks().forEach(track => track.stop());
-            }
-            document.getElementById("cameraBox").classList.add("hidden");
+            visualSearchBox.classList.add("hidden");
+            homeOptions.classList.remove("hidden");
+            if (videoStream) videoStream.getTracks().forEach(t => t.stop());
+            cameraBox.classList.add("hidden");
         }
 
-        let videoStream;
-
         function startCamera() {
-            const video = document.getElementById("video");
-            const cameraBox = document.getElementById("cameraBox");
             cameraBox.classList.remove("hidden");
-
-            navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+            navigator.mediaDevices.getUserMedia({ video: true })
                 .then(stream => {
                     videoStream = stream;
                     video.srcObject = stream;
-                })
-                .catch(err => {
-                    alert("Camera access denied or not available.");
-                    console.error(err);
                 });
         }
 
         function captureImage() {
-            const video = document.getElementById("video");
-            const canvas = document.getElementById("canvas");
             const ctx = canvas.getContext("2d");
-
-            // 🔑 VERY IMPORTANT: set canvas size
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
+            ctx.drawImage(video, 0, 0);
 
-            // Draw frame
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-            // ---- Brightness + Contrast Boost ----
-            const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            const data = imgData.data;
-
-            const brightness = 15;   // 10–20
-            const contrast = 1.1;    // 1.05–1.2
-
-            for (let i = 0; i < data.length; i += 4) {
-                data[i] = Math.min(255, data[i] * contrast + brightness); // R
-                data[i + 1] = Math.min(255, data[i + 1] * contrast + brightness); // G
-                data[i + 2] = Math.min(255, data[i + 2] * contrast + brightness); // B
-            }
-
-            ctx.putImageData(imgData, 0, 0);
-
-            // Stop camera
-            if (videoStream) {
-                videoStream.getTracks().forEach(track => track.stop());
-            }
-
-            // 🔑 Convert canvas to image & send to backend
             canvas.toBlob(blob => {
                 const formData = new FormData();
-                formData.append("image", blob, "webcam_capture.jpg");
+                formData.append("image", blob, "webcam.jpg");
 
-                fetch("/search", {
-                    method: "POST",
-                    body: formData
-                })
-                    .then(res => res.text())
+                fetch("/search", { method: "POST", body: formData })
+                    .then(r => r.text())
                     .then(html => {
-                        // Replace page with results
                         document.open();
                         document.write(html);
                         document.close();
-                    })
-                    .catch(err => {
-                        alert("Failed to process image");
-                        console.error(err);
                     });
             }, "image/jpeg");
+
+            videoStream.getTracks().forEach(t => t.stop());
         }
         let suitabilityStream;
 
-        function openSuitability() {
-            document.getElementById("homeOptions").classList.add("hidden");
-            document.getElementById("suitabilityBox").classList.remove("hidden");
-        }
-
-        function goBackSuitability() {
-            document.getElementById("suitabilityBox").classList.add("hidden");
-            document.getElementById("homeOptions").classList.remove("hidden");
-
-            if (suitabilityStream) {
-                suitabilityStream.getTracks().forEach(t => t.stop());
-            }
-
-            document.getElementById("suitabilityCameraBox").classList.add("hidden");
-        }
-
         function startSuitabilityCamera() {
-            const video = document.getElementById("suitabilityVideo");
-            const box = document.getElementById("suitabilityCameraBox");
-            box.classList.remove("hidden");
+            suitabilityCameraBox.classList.remove("hidden");
 
             navigator.mediaDevices.getUserMedia({ video: true })
                 .then(stream => {
                     suitabilityStream = stream;
-                    video.srcObject = stream;
-                })
-                .catch(() => alert("Camera not available"));
+                    suitabilityVideo.srcObject = stream;
+                });
         }
 
         function captureSuitabilityImage() {
-            const video = document.getElementById("suitabilityVideo");
-            const canvas = document.getElementById("suitabilityCanvas");
+            const ctx = suitabilityCanvas.getContext("2d");
 
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
+            suitabilityCanvas.width = suitabilityVideo.videoWidth;
+            suitabilityCanvas.height = suitabilityVideo.videoHeight;
 
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(video, 0, 0);
+            ctx.drawImage(
+                suitabilityVideo,
+                0,
+                0,
+                suitabilityCanvas.width,
+                suitabilityCanvas.height
+            );
 
-            canvas.toBlob(blob => {
+            suitabilityCanvas.toBlob(blob => {
                 const formData = new FormData();
                 formData.append("image", blob, "webcam_face.jpg");
 
                 fetch("/suitability", {
                     method: "POST",
                     body: formData
-                }).then(res => {
-                    if (res.redirected) {
-                        window.location.href = res.url;
-                    }
-                });
+                })
+                    .then(r => r.text())
+                    .then(html => {
+                        document.open();
+                        document.write(html);
+                        document.close();
+                    });
             }, "image/jpeg");
+
+            if (suitabilityStream) {
+                suitabilityStream.getTracks().forEach(t => t.stop());
+            }
+        }
+        function openSuitability() {
+            homeOptions.classList.add("hidden");
+            suitabilityBox.classList.remove("hidden");
+        }
+
+        function goBackSuitability() {
+            suitabilityBox.classList.add("hidden");
+            homeOptions.classList.remove("hidden");
+
+            if (suitabilityStream) {
+                suitabilityStream.getTracks().forEach(t => t.stop());
+            }
+            suitabilityCameraBox.classList.add("hidden");
         }
 
     </script>

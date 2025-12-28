@@ -1,0 +1,21 @@
+# Recommended: create the conda environment using `environment.yml` included in the repo
+# (preferred on Windows because FAISS and PyTorch have platform-specific builds).
+# If you prefer pip, the packages below are the main runtime dependencies.
+
+flask==2.3.2
+numpy==1.26.4
+Pillow==10.0.1
+scikit-learn==1.4.2
+opencv-python==4.9.0.74
+tqdm==4.66.1
+
+faiss-cpu
+
+# PyTorch and torchvision: prefer installing via conda or follow the official install
+# instructions at https://pytorch.org/get-started/locally/ to match your CUDA/CPU setup.
+# Example CPU-only pip install (may be large):
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+
+# FAISS: installing via pip on Windows often fails. Use conda if possible:
+#   conda install -c conda-forge faiss-cpu
+

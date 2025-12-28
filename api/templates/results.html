@@ -149,6 +149,80 @@
             border-bottom: 1px solid #e8e8e8;
         }
 
+        /* ENHANCED FILTER STYLES */
+        .filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 30px;
+            padding: 24px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border: 1px solid #e8e8e8;
+        }
+
+        .filters select {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 15px;
+            font-family: inherit;
+            color: #1a1a1a;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%231a1a1a' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 40px;
+        }
+
+        .filters select:hover {
+            border-color: #b0b0b0;
+            background-color: #fafafa;
+        }
+
+        .filters select:focus {
+            outline: none;
+            border-color: #1a1a1a;
+            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.1);
+        }
+
+        .filters button[type="submit"] {
+            padding: 14px 24px;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: inherit;
+            color: white;
+            background: #1a1a1a;
+            border: 2px solid #1a1a1a;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .filters button[type="submit"]:hover {
+            background: #000000;
+            border-color: #000000;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .filters button[type="submit"]:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .filters {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+        }
+
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -328,6 +402,11 @@
                 padding: 20px;
             }
 
+            .filters {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
             .products-grid {
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
                 gap: 16px;
@@ -362,13 +441,30 @@
 
             <div class="query-details">
                 <h2>Detected Attributes</h2>
+
                 <div class="attribute">
                     <span class="attribute-label">Frame Shape:</span>
                     <span class="attribute-value">{{ query_shape }}</span>
                 </div>
+
                 <div class="attribute">
                     <span class="attribute-label">Frame Color:</span>
                     <span class="attribute-value">{{ query_color }}</span>
+                </div>
+
+                <div class="attribute">
+                    <span class="attribute-label">Brand:</span>
+                    <span class="attribute-value">{{ query_brand }}</span>
+                </div>
+
+                <div class="attribute">
+                    <span class="attribute-label">Material:</span>
+                    <span class="attribute-value">{{ query_material }}</span>
+                </div>
+
+                <div class="attribute">
+                    <span class="attribute-label">Price:</span>
+                    <span class="attribute-value">₹{{ query_price }}</span>
                 </div>
             </div>
         </div>
@@ -376,7 +472,59 @@
         <!-- Similar Products Section -->
         <div class="similar-section">
             <h2>Similar Products</h2>
+            <form method="GET" action="/search" class="filters">
+                <select name="brand">
+                    <option value="">Select Brand</option>
+                    <option value="eyebuydirect">EyeBuyDirect</option>
+                    <option value="hustlr">Hustlr</option>
+                    <option value="john-jacobs">John Jacobs</option>
+                    <option value="lenskart-air">Lenskart Air</option>
+                    <option value="lenskart-blu">Lenskart Blu</option>
+                    <option value="oakley">Oakley</option>
+                    <option value="vincent-chase">Vincent Chase</option>
+                    <option value="vooglam">Vooglam</option>
+                    <option value="warby-parker">Warby Parker</option>
+                    <option value="zenni-optical">Zenni Optical</option>
+                </select>
 
+                <select name="material">
+                    <option value="">Select Material</option>
+                    <option value="acetate">Acetate</option>
+                    <option value="bio-acetate">Bio-acetate</option>
+                    <option value="metal">Metal</option>
+                    <option value="polycarbonate">Polycarbonate</option>
+                    <option value="stainless-steel">Stainless Steel</option>
+                    <option value="titanium">Titanium</option>
+                    <option value="tr90">TR90</option>
+                    <option value="ultem">Ultem</option>
+                    <option value="wood-texture">Wood-texture Acetate</option>
+                </select>
+
+                <select name="price-range">
+                    <option value="">Select Price Range</option>
+                    <option value="0-1500">Under ₹1500</option>
+                    <option value="1501-3000">₹1500 - ₹3000</option>
+                    <option value="3001-5000">₹3000 - ₹5000</option>
+                    <option value="5001-9000">Above ₹5000</option>
+                </select>
+
+                <select name="color">
+                    <option value="">Select Color</option>
+                    <option value="black">Black / Matte Black</option>
+                    <option value="blue">Blue / Royal Blue / Navy</option>
+                    <option value="clear">Clear / Translucent</option>
+                    <option value="gold">Gold / Rose Gold / Polished Gold</option>
+                    <option value="grey">Grey / Translucent Grey / Gunmetal</option>
+                    <option value="pink">Pink / Translucent Pink / Rose Pink</option>
+                    <option value="silver">Silver / Matte Silver</option>
+                    <option value="tortoise">Tortoise Shell / Amber Tortoise</option>
+                    <option value="unique">Unique (Burgundy, Woodgrain, Floral)</option>
+                </select>
+
+                <button type="submit">Apply Filters</button>
+            </form>
+
+            {% if results and results|length > 0 %}
             <div class="products-grid">
                 {% for r in results %}
                 <div class="product-card">
@@ -393,7 +541,7 @@
                             </div>
                             <div class="product-info-row">
                                 <span class="info-label">Color:</span>
-                                <span class="info-value">{{ r.color }}</span>
+                                <span class="info-value">{{ r.frame_color }}</span>
                             </div>
                             <div class="product-info-row">
                                 <span class="info-label">Shape Match:</span>
@@ -430,6 +578,14 @@
                                     <span class="match-icon">✓</span>
                                     <span>High visual similarity</span>
                                 </div>
+
+                                {% if r.final_score and r.final_score > 0 %}
+                                <div class="match-reason">
+                                    <span class="match-icon">✓</span>
+                                    <span>Matches your description</span>
+                                </div>
+                                {% endif %}
+
                             </div>
                         </div>
 
@@ -443,6 +599,11 @@
                 </div>
                 {% endfor %}
             </div>
+            {% else %}
+            <div style="padding: 40px; text-align: center; color: #666; font-size: 18px;">
+                ❌ No results found for selected filters
+            </div>
+            {% endif %}
         </div>
     </div>
 </body>

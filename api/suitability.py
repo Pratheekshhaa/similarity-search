@@ -1,48 +1,56 @@
 """
 suitability.py
 --------------
-Phase 2 (Reworked): Face shape detection using OpenCV geometry
-(NO MediaPipe, NO ML dependency)
+Reliable face-shape detection using:
+- Haar Face
+- Haar Eyes
+- Geometry ratios (NO MediaPipe)
 """
 
 import cv2
 import numpy as np
 
-# Load Haar Cascade (comes with OpenCV)
+# ---------------------------------------------------------
+# Load cascades
+# ---------------------------------------------------------
 FACE_CASCADE = cv2.CascadeClassifier(
     cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
 )
 
+EYE_CASCADE = cv2.CascadeClassifier(
+    cv2.data.haarcascades + "haarcascade_eye.xml"
+)
+
 # ---------------------------------------------------------
-# Face shape classifier
+# Face shape classifier (REAL)
 # ---------------------------------------------------------
+def classify_face_shape(face_h, face_w, eye_dist):
+    ratio_hw = face_h / face_w
+    ratio_eye = eye_dist / face_w
 
-def classify_face_shape(face_w, face_h):
-    """
-    Classify face shape using bounding-box geometry
-    """
+    print("DEBUG ratios → H/W:", round(ratio_hw, 2),
+          "Eye/W:", round(ratio_eye, 2))
 
-    ratio = face_h / face_w
-
-    if ratio < 1.1:
+    # Round: wide face, close eyes
+    if ratio_hw < 1.05 and ratio_eye < 0.45:
         return "Round"
-    elif 1.1 <= ratio <= 1.25:
+
+    # Square: similar H/W, wider eyes
+    if 1.0 <= ratio_hw <= 1.15 and ratio_eye >= 0.45:
         return "Square"
-    elif 1.25 < ratio <= 1.4:
+
+    # Oval: longer face
+    if 1.15 < ratio_hw <= 1.35:
         return "Oval"
-    else:
-        return "Heart"
+
+    # Heart: long face, narrow jaw impression
+    return "Heart"
 
 
 # ---------------------------------------------------------
-# Main analysis function
+# Main analysis
 # ---------------------------------------------------------
-
 def analyze_face(image_path):
-    """
-    Analyze face and return face shape + recommendations
-    """
-
     image = cv2.imread(image_path)
     if image is None:
         raise ValueError("Invalid image path")
@@ -53,7 +61,7 @@ def analyze_face(image_path):
         gray,
         scaleFactor=1.1,
         minNeighbors=5,
-        minSize=(100, 100)
+        minSize=(120, 120)
     )
 
     if len(faces) == 0:
@@ -63,10 +71,30 @@ def analyze_face(image_path):
             "explanation": ["No face detected"]
         }
 
-    # Take largest detected face
+    # Largest face
     x, y, w, h = max(faces, key=lambda f: f[2] * f[3])
+    face_gray = gray[y:y+h, x:x+w]
 
-    face_shape = classify_face_shape(w, h)
+    # -----------------------------------------------------
+    # Detect eyes
+    # -----------------------------------------------------
+    eyes = EYE_CASCADE.detectMultiScale(
+        face_gray,
+        scaleFactor=1.1,
+        minNeighbors=5,
+        minSize=(30, 30)
+    )
+
+    if len(eyes) < 2:
+        # fallback (still works)
+        eye_dist = w * 0.4
+    else:
+        # Take two largest eyes
+        eyes = sorted(eyes, key=lambda e: e[2], reverse=True)[:2]
+        centers = [(ex + ew//2, ey + eh//2) for ex, ey, ew, eh in eyes]
+        eye_dist = abs(centers[0][0] - centers[1][0])
+
+    face_shape = classify_face_shape(h, w, eye_dist)
 
     recommendations = {
         "Round": ["Square", "Rectangular"],
@@ -96,6 +124,6 @@ def analyze_face(image_path):
 
     return {
         "face_shape": face_shape,
-        "recommended_frames": recommendations.get(face_shape, []),
-        "explanation": explanations.get(face_shape, [])
+        "recommended_frames": recommendations[face_shape],
+        "explanation": explanations[face_shape]
     }
