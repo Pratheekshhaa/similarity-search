@@ -47,6 +47,8 @@ def _load_metadata():
     if _metadata is not None:
         return _metadata
 
+    # Fail fast if metadata file isn't present. The calling code expects
+    # structured metadata to be available for filtering and display.
     if not os.path.exists(METADATA_PATH):
         raise FileNotFoundError(
             f"Metadata file not found at {METADATA_PATH}"
@@ -54,14 +56,19 @@ def _load_metadata():
 
     metadata = {}
 
+    # Read CSV with a header that includes at minimum: image, brand,
+    # color, material, price. Missing or malformed rows are skipped.
     with open(METADATA_PATH, "r", encoding="utf-8") as f:
         reader = csv.DictReader(f)
 
         for row in reader:
             image = row.get("image")
             if not image:
+                # Skip empty or header-only rows
                 continue
 
+            # Normalize textual fields to lower-case for case-insensitive
+            # comparisons in the filtering stage.
             metadata[image] = {
                 "brand": row.get("brand", "").strip().lower(),
                 "color": row.get("color", "").strip().lower(),
@@ -101,37 +108,39 @@ def apply_filters(
         Filtered list of results
     """
 
+    # Load metadata once (cached) and apply filters in a single pass.
     metadata = _load_metadata()
     filtered_results = []
 
     for r in results:
         image = r.get("image")
 
+        # Skip items with no metadata (can't be filtered reliably)
         if image not in metadata:
-            # Skip results without metadata
             continue
 
         meta = metadata[image]
 
-        # Brand filter (partial match allowed)
+        # Brand filter (supports partial, case-insensitive matching)
         if brand and brand.lower() not in meta["brand"]:
             continue
 
-        # Color filter
+        # Color filter (case-insensitive substring match)
         if color and color.lower() not in meta["color"]:
             continue
 
-        # Material filter
+        # Material filter (case-insensitive substring match)
         if material and material.lower() not in meta["material"]:
             continue
 
-        # Price range filter
+        # Price range filter (numeric comparators)
         price = meta["price"]
         if min_price is not None and price < min_price:
             continue
         if max_price is not None and price > max_price:
             continue
 
+        # Item passed all filters — keep it
         filtered_results.append(r)
 
     return filtered_results

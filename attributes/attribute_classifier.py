@@ -3,15 +3,23 @@ attribute_classifier.py
 -----------------------
 Lightweight centroid-based classifier for eyewear attributes.
 
-Why centroid classifier?
-- No training required
-- Uses the same 2048-D embeddings from ResNet50
-- Manually labeled examples per class
-- Computes class centroids
-- Classifies new images by nearest centroid (cosine similarity)
+This module implements a simple, explainable classifier that operates in the
+precomputed embedding space (the same 2048-D vectors produced by the ResNet
+backbone). Instead of training a classifier, we compute a centroid (mean
+vector) for each attribute class from a few labeled examples and classify new
+images by nearest-centroid using cosine distance. This is intentionally simple
+and robust for small labeled sets and quick iteration.
 
-Attributes supported:
-- frame_shape (aviator, round, square, wayfarer, cat_eye, rimless)
+Key functions:
+- `build_shape_centroids(labeled_examples)`: builds and saves centroids from
+    labeled image filenames and existing embeddings.
+- `classify_shape(query_embedding)`: classifies a query embedding by nearest
+    centroid and returns the predicted shape with a distance score.
+
+Design rationale:
+- No additional training step required — useful for demos and low-data scenarios.
+- Centroid vectors are stored in `attributes/shape_centroids.json` and loaded
+    once per process for efficiency.
 """
 
 import os
@@ -23,10 +31,7 @@ from numpy.linalg import norm
 # CONFIG
 # ---------------------------------------------------------
 
-CENTROID_FILE = os.path.join(
-    os.path.dirname(__file__),
-    "shape_centroids.json"
-)
+CENTROID_FILE = os.path.join(os.path.dirname(__file__), "shape_centroids.json")
 
 # ---------------------------------------------------------
 # Load Centroids (cached)
@@ -34,24 +39,26 @@ CENTROID_FILE = os.path.join(
 
 _centroids = None
 
+
 def _load_centroids():
+    """Lazy-load centroids from disk and cache them in memory.
+
+    The stored JSON maps class -> list(float) (the centroid vector). We convert
+    those into L2-normalized numpy arrays for cosine similarity comparisons.
+    """
     global _centroids
 
     if _centroids is None:
         if not os.path.exists(CENTROID_FILE):
             raise FileNotFoundError(
-                f"Centroid file not found at {CENTROID_FILE}. "
-                "Run build_shape_centroids() first."
+                f"Centroid file not found at {CENTROID_FILE}. Run build_shape_centroids() first."
             )
 
         with open(CENTROID_FILE, "r") as f:
             data = json.load(f)
 
-        # Convert lists → normalized numpy arrays
-        _centroids = {
-            k: np.array(v, dtype="float32") / norm(v)
-            for k, v in data.items()
-        }
+        # Convert each saved list into a normalized numpy vector for fast dot products
+        _centroids = {k: np.array(v, dtype="float32") / norm(v) for k, v in data.items()}
 
         print(f"[INFO] Loaded {len(_centroids)} shape centroids")
 
@@ -84,17 +91,21 @@ def build_shape_centroids(labeled_examples: dict):
     EMB_PATH = "vector_store/embeddings.npy"
     NAME_PATH = "vector_store/image_names.json"
 
+    # Preconditions: embeddings and image name mapping must exist.
     if not os.path.exists(EMB_PATH) or not os.path.exists(NAME_PATH):
         raise FileNotFoundError("Run embed_products.py first.")
 
+    # Load precomputed embeddings (N x D) and the ordered list of image names
     embeddings = np.load(EMB_PATH).astype("float32")
     with open(NAME_PATH, "r") as f:
         image_names = json.load(f)
 
+    # Map filename -> embedding vector for quick lookup
     name_to_vec = {name: embeddings[i] for i, name in enumerate(image_names)}
 
     centroids = {}
 
+    # For each class/shape, collect example vectors, compute the mean, then normalize
     for shape, img_list in labeled_examples.items():
         vecs = []
 
@@ -109,9 +120,10 @@ def build_shape_centroids(labeled_examples: dict):
             continue
 
         centroid = np.mean(np.vstack(vecs), axis=0)
-        centroid = centroid / norm(centroid)   # normalize
+        centroid = centroid / norm(centroid)  # normalize to unit length
         centroids[shape] = centroid.tolist()
 
+    # Persist centroids to disk for runtime loading
     os.makedirs(os.path.dirname(CENTROID_FILE), exist_ok=True)
     with open(CENTROID_FILE, "w") as f:
         json.dump(centroids, f, indent=2)
@@ -124,6 +136,7 @@ def build_shape_centroids(labeled_examples: dict):
 # ---------------------------------------------------------
 
 def classify_shape(query_embedding: np.ndarray):
+    # Load centroids (cached) and guard if none are available
     centroids = _load_centroids()
 
     if not centroids:
@@ -132,23 +145,20 @@ def classify_shape(query_embedding: np.ndarray):
     best_shape = None
     best_dist = float("inf")
 
+    # Normalize the query to unit length for cosine distance comparisons
     q = query_embedding.astype("float32")
-    q = q / (np.linalg.norm(q) + 1e-8)   # 🔑 normalize query
+    q = q / (np.linalg.norm(q) + 1e-8)
 
-
+    # Find the centroid with minimum cosine distance (1 - cosine_similarity)
     for shape, centroid in centroids.items():
         c = centroid.astype("float32")
 
-        # cosine distance
         dist = 1 - np.dot(q, c)
         if dist < best_dist:
             best_dist = dist
             best_shape = shape
 
-    return {
-        "shape": best_shape if best_shape else "unknown",
-        "distance": round(float(best_dist), 4) if best_shape else None
-    }
+    return {"shape": best_shape if best_shape else "unknown", "distance": round(float(best_dist), 4) if best_shape else None}
 
 
 # ---------------------------------------------------------

@@ -7,9 +7,15 @@ visual similarity search.
 
 Pipeline:
 - Load pretrained ImageNet ResNet50
-- Preprocess images using preprocess.py
-- Extract 2048-D embeddings
-- Save embeddings + image order mapping
+- Preprocess images using `ingestion.preprocess`
+- Extract 2048-D embeddings for each image
+- Save embeddings + image order mapping for deterministic indexing
+
+Notes:
+- The offline embedding extraction is intended to be run once (or when the
+    product catalog changes). The output files (`embeddings.npy` and
+    `image_names.json`) are required by `vector_store.build_index` and runtime
+    search.
 """
 
 import os
@@ -45,12 +51,15 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 def load_embedding_model(device="cpu"):
     """
     Loads a pretrained ResNet50 and removes the classification head.
-    Output: 2048-D embedding vector.
+
+    Output: 2048-D embedding vector. The function returns a model placed on
+    the requested `device` and set to evaluation mode. Loading happens once
+    during an extraction run to avoid repeated heavy I/O.
     """
-    model = models.resnet50(
-        weights=models.ResNet50_Weights.IMAGENET1K_V2
-    )
-    model.fc = torch.nn.Identity()  # remove classifier
+    model = models.resnet50(weights=models.ResNet50_Weights.IMAGENET1K_V2)
+    # Replace the final classification layer with an identity to obtain the
+    # penultimate feature vector (2048-D for ResNet50).
+    model.fc = torch.nn.Identity()
     model = model.to(device)
     model.eval()
     return model
@@ -70,8 +79,11 @@ def extract_embedding(model, tensor):
     Returns:
         numpy array of shape (2048,)
     """
+    # Inference: disable gradient tracking to save memory and cycles
     with torch.no_grad():
         embedding = model(tensor)
+
+    # Convert to CPU numpy vector and strip batch dimension
     return embedding.squeeze(0).cpu().numpy()
 
 

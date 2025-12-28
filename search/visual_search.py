@@ -33,13 +33,16 @@ _image_names = None
 
 def _load_resources():
     global _faiss_index, _image_names
-
+    # Load FAISS index once and keep in module-level state so Flask can
+    # reuse the same object across requests (avoids repeated disk I/O).
     if _faiss_index is None:
         if not os.path.exists(INDEX_PATH):
             raise FileNotFoundError(f"FAISS index not found at {INDEX_PATH}")
         _faiss_index = faiss.read_index(INDEX_PATH)
         print(f"[INFO] FAISS index loaded ({_faiss_index.ntotal} vectors)")
 
+    # Load the image name mapping (index -> filename). The order must
+    # match the embeddings used to build the index.
     if _image_names is None:
         if not os.path.exists(IMAGE_NAMES_PATH):
             raise FileNotFoundError(f"Image names not found at {IMAGE_NAMES_PATH}")
@@ -70,19 +73,22 @@ def search_similar(query_embedding: np.ndarray, top_k: int = 5):
 
     _load_resources()
 
-    # Ensure correct shape
+    # Ensure the query is a 2D float32 array: (1, D)
     if query_embedding.ndim == 1:
         query_embedding = query_embedding.reshape(1, -1).astype("float32")
 
-    # Normalize for cosine similarity
+    # If cosine similarity is used during index construction, normalize
+    # the query vector so that FAISS's inner-product distances correspond
+    # to cosine similarity scores.
     if METRIC == "cosine":
         faiss.normalize_L2(query_embedding)
 
-    # FAISS search
+    # Execute the ANN search. FAISS returns (distances, indices).
     scores, indices = _faiss_index.search(query_embedding, top_k)
 
     results = []
     for score, idx in zip(scores[0], indices[0]):
+        # FAISS may return -1 for padded/invalid entries; skip them.
         if idx == -1:
             continue
 

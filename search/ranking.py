@@ -37,12 +37,15 @@ def compute_attribute_score(result, query_shape=None):
         float
     """
 
+    # If no attribute provided, no bonus
     if not query_shape:
         return 0.0
 
     image_name = result.get("image", "").lower()
 
-    # very lightweight heuristic (safe)
+    # Lightweight heuristic: if query shape appears in the filename,
+    # give a small deterministic bonus. This is intentionally simple
+    # and conservative to avoid introducing noisy scoring signals.
     if query_shape.lower() in image_name:
         return 1.0
 
@@ -62,7 +65,8 @@ def compute_filter_score(result, applied_filters=None):
     if not applied_filters:
         return 0.0
 
-    # If item survived filtering, reward slightly
+    # If any filters were applied and the item survived them, provide a
+    # small deterministic bonus to favor results that match user intent.
     return 1.0
 
 
@@ -79,8 +83,11 @@ def rerank_results(results, query_shape=None, applied_filters=None):
     final_ranked = []
 
     for r in results:
+        # Primary similarity score from FAISS (expected to be in [0,1])
         sim_score = r.get("score", 0)
 
+        # Small, explainable bonuses computed independently of the ANN
+        # similarity and applied in a weighted sum to produce `final_score`.
         attr_score = compute_attribute_score(r, query_shape)
         filter_score = compute_filter_score(r, applied_filters)
 
@@ -95,5 +102,6 @@ def rerank_results(results, query_shape=None, applied_filters=None):
             "final_score": round(final_score, 4)
         })
 
+    # Sort descending by the computed final score
     final_ranked.sort(key=lambda x: x["final_score"], reverse=True)
     return final_ranked
