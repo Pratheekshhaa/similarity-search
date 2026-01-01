@@ -116,7 +116,7 @@ I used an eyewear dataset sourced from Kaggle (https://www.kaggle.com/datasets/e
 Steps:
 
 1. Download an eyewear/product images dataset from Kaggle (or use your own).
-	 - Unzip the downloaded archive to a local folder (we'll call it `raw_dataset/`).
+	 - Unzip the downloaded archive to a local folder (we'll call it `dataset/`).
 
 2. Prepare and standardize images: Use the script `prepare_dataset.py`, run the script to extract the images from various folders and move it to a common `api\static\products` folder
 
