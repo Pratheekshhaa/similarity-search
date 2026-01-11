@@ -37,9 +37,7 @@ IMAGE_DIR = "api/static/products"
 # Output: inferred shape centroids written here
 OUT_PATH = "attributes/shape_centroids.json"
 
-# ---------------------------------------------------------
 # Shape heuristics (automatic)
-# ---------------------------------------------------------
 
 def infer_shape_from_geometry(img_path):
     """Infer a coarse frame shape from a product image using simple geometry.
@@ -84,9 +82,7 @@ def infer_shape_from_geometry(img_path):
         return "cat_eye"
     return "square"
 
-# ---------------------------------------------------------
 # MAIN PIPELINE
-# ---------------------------------------------------------
 
 def auto_discover_shapes(n_clusters=4):
     # Load embeddings and corresponding image names
@@ -139,9 +135,7 @@ def auto_discover_shapes(n_clusters=4):
     json.dump(shape_centroids, open(OUT_PATH, "w"), indent=2)
     print(f"[DONE] Saved → {OUT_PATH}")
 
-# ---------------------------------------------------------
 # RUN
-# ---------------------------------------------------------
 
 if __name__ == "__main__":
     auto_discover_shapes()
