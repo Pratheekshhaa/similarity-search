@@ -27,15 +27,11 @@ import json
 import numpy as np
 from numpy.linalg import norm
 
-# ---------------------------------------------------------
 # CONFIG
-# ---------------------------------------------------------
 
 CENTROID_FILE = os.path.join(os.path.dirname(__file__), "shape_centroids.json")
 
-# ---------------------------------------------------------
 # Load Centroids (cached)
-# ---------------------------------------------------------
 
 _centroids = None
 
@@ -65,9 +61,7 @@ def _load_centroids():
     return _centroids
 
 
-# ---------------------------------------------------------
 # Build Centroids (run once manually)
-# ---------------------------------------------------------
 
 def build_shape_centroids(labeled_examples: dict):
     """
@@ -131,9 +125,7 @@ def build_shape_centroids(labeled_examples: dict):
     print(f"[DONE] Saved centroids → {CENTROID_FILE}")
 
 
-# ---------------------------------------------------------
 # Classify New Image
-# ---------------------------------------------------------
 
 def classify_shape(query_embedding: np.ndarray):
     # Load centroids (cached) and guard if none are available
@@ -161,9 +153,7 @@ def classify_shape(query_embedding: np.ndarray):
     return {"shape": best_shape if best_shape else "unknown", "distance": round(float(best_dist), 4) if best_shape else None}
 
 
-# ---------------------------------------------------------
 # Script Test
-# ---------------------------------------------------------
 
 if __name__ == "__main__":
     dummy = np.random.rand(2048).astype("float32")
